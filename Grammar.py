@@ -1,5 +1,6 @@
 import streamlit as st
 import random
+import os
 
 st.write("🌱 Grammar learning")
 
@@ -15,18 +16,15 @@ with tab1:
     st.markdown("### 📋 Understanding Past Tense")
     st.write("Let's Learn About the Past Tense!")
 
-    # List of image file paths
-    image_urls = [
-        "forfinal/slide1.png",
-        "forfinal/slide2.png",
-        "forfinal/slide3.png",
-        "forfinal/slide4.png",
-        "forfinal/slide5.png"
-    ]
+    # List of image file paths in the 'images' directory
+    image_dir = "images"
+    image_files = [f for f in os.listdir(image_dir) if f.endswith(('.png', '.jpg', '.jpeg'))]
 
     # Display each image using a loop
-    for url in image_urls:
-        st.image(url, caption=f"Slide {image_urls.index(url) + 1}", width=600)  # width in pixels
+    for image_file in image_files:
+        image_path = os.path.join(image_dir, image_file)
+        st.write(f"Loading image from: {image_path}")
+        st.image(image_path, caption=image_file, width=600)  # width in pixels
 
 ######### TAB 2
 
