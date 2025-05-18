@@ -15,13 +15,13 @@ with tab1:
     st.markdown("### 📋 Understanding Past Tense")
     st.write("Let's Learn About the Past Tense!")
 
-    # List of image URLs hosted on GitHub
+    # List of image URLs from your GitHub repository
     image_urls = [
-        "https://github.com/MK316/streamlit25/raw/main/images/image00.png",
-        "https://github.com/MK316/streamlit25/raw/main/images/image01.png",
-        "https://github.com/MK316/streamlit25/raw/main/images/image02.png",
-        "https://github.com/MK316/streamlit25/raw/main/images/image03.png",
-        "https://github.com/MK316/streamlit25/raw/main/images/image04.png"
+        "https://github.com/KRG0405/Forfinal/blob/main/images/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C1.PNG",
+        "https://github.com/KRG0405/Forfinal/blob/main/images/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C2.PNG",
+        "https://github.com/KRG0405/Forfinal/blob/main/images/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C3.PNG",
+        "https://github.com/KRG0405/Forfinal/blob/main/images/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C4.PNG",
+        "https://github.com/KRG0405/Forfinal/blob/main/images/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C5.PNG"
     ]
 
     # Display each image using a loop
