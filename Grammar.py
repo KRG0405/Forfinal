@@ -15,15 +15,18 @@ with tab1:
     st.markdown("### 📋 Understanding Past Tense")
     st.write("Let's Learn About the Past Tense!")
 
-    # Image file uploader
-    uploaded_files = st.file_uploader(
-        "Choose image files", type=['png', 'jpg', 'jpeg'], accept_multiple_files=True
-    )
+    # List of image file paths
+    image_urls = [
+        "forfinal/slide1.png",
+        "forfinal/slide2.png",
+        "forfinal/slide3.png",
+        "forfinal/slide4.png",
+        "forfinal/slide5.png"
+    ]
 
-    # Display each uploaded image
-    if uploaded_files:
-        for uploaded_file in uploaded_files:
-            st.image(uploaded_file, caption=uploaded_file.name, width=600)  # width in pixels
+    # Display each image using a loop
+    for url in image_urls:
+        st.image(url, caption=f"Slide {image_urls.index(url) + 1}", width=600)  # width in pixels
 
 ######### TAB 2
 
