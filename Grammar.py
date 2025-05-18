@@ -15,6 +15,7 @@ with tab1:
     st.markdown("### 📋 Understanding Past Tense")
     st.write("Let's Learn About the Past Tense!")
 
+    
     for url in image_urls:
     st.write(f"Loading image from: {url}")
     st.image(url, caption="Slide", width=600)
