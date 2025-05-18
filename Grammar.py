@@ -17,11 +17,11 @@ with tab1:
 
     # List of image URLs from your GitHub repository
     image_urls = [
-        "https://github.com/KRG0405/Forfinal/blob/main/images/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C1.PNG",
-        "https://github.com/KRG0405/Forfinal/blob/main/images/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C2.PNG",
-        "https://github.com/KRG0405/Forfinal/blob/main/images/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C3.PNG",
-        "https://github.com/KRG0405/Forfinal/blob/main/images/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C4.PNG",
-        "https://github.com/KRG0405/Forfinal/blob/main/images/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C5.PNG"
+        "images/슬라이드1.PNG",
+        "images/슬라이드2.PNG",
+        "images/슬라이드3.PNG",
+        "images/슬라이드4.PNG",
+        "images/슬라이드5.PNG"
     ]
 
     # Display each image using a loop
