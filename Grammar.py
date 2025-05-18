@@ -16,23 +16,20 @@ with tab1:
     st.write("Let's Learn About the Past Tense!")
 
     
-    for url in image_urls:
-    st.write(f"Loading image from: {url}")
-    st.image(url, caption="Slide", width=600)
-
-
     # List of image file paths
-    image_urls = [
-        "images/슬라이드1.PNG",
-        "images/슬라이드2.PNG",
-        "images/슬라이드3.PNG",
-        "images/슬라이드4.PNG",
-        "images/슬라이드5.PNG"
-    ]
+image_urls = [
+    "images/슬라이드1.PNG",
+    "images/슬라이드2.PNG",
+    "images/슬라이드3.PNG",
+    "images/슬라이드4.PNG",
+    "images/슬라이드5.PNG"
+]
 
-    # Display each image using a loop
-    for url in image_urls:
-        st.image(url, caption="Slide", width=600)  # width in pixels
+# Display each image using a loop
+for url in image_urls:
+    st.write(f"Loading image from: {url}")
+    st.image(url, caption="Slide", width=600)  # width in pixels
+
 
 ######### TAB 2
 
