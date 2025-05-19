@@ -156,7 +156,9 @@ with st.container():
             if past_correct and participle_correct:
                 st.success("✅ Both answers are correct!")
             else:
+                st.error("❌ Incorrect. You need to get both forms right.")
                 if not past_correct:
-                    st.error(f"❌ Incorrect past tense. The correct form is: **{correct_past}**")
+                    st.info(f"The correct past tense is: **{correct_past}**")
                 if not participle_correct:
-                    st.error(f"❌ Incorrect past participle. The correct form is: **{correct_participle}**")
+                    st.info(f"The correct past participle is: **{correct_participle}**")
+
