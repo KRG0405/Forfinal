@@ -77,52 +77,86 @@ with tab2:
 
 ######### TAB 3
 
-with tab3:
+import streamlit as st
+import random
+
+with st.container():
     st.title("Irregular Verb Past Tense Practice")
 
-    # List of verbs and their past tense forms
+    # List of verbs and their past and past participle forms
     verbs = {
-        "be": "was/were",
-        "become": "became",
-        "begin": "began",
-        "break": "broke",
-        "bring": "brought",
-        "build": "built",
-        "buy": "bought",
-        "catch": "caught",
-        "choose": "chose",
-        "come": "came"
+        "be": ("was/were", "been"),
+        "become": ("became", "become"),
+        "begin": ("began", "begun"),
+        "break": ("broke", "broken"),
+        "bring": ("brought", "brought"),
+        "build": ("built", "built"),
+        "buy": ("bought", "bought"),
+        "catch": ("caught", "caught"),
+        "choose": ("chose", "chosen"),
+        "come": ("came", "come"),
+        "do": ("did", "done"),
+        "drink": ("drank", "drunk"),
+        "drive": ("drove", "driven"),
+        "eat": ("ate", "eaten"),
+        "fall": ("fell", "fallen"),
+        "feel": ("felt", "felt"),
+        "get": ("got", "gotten"),
+        "go": ("went", "gone"),
+        "have": ("had", "had"),
+        "know": ("knew", "known"),
+        "leave": ("left", "left"),
+        "make": ("made", "made"),
+        "read": ("read", "read"),
+        "run": ("ran", "run"),
+        "say": ("said", "said"),
+        "see": ("saw", "seen"),
+        "send": ("sent", "sent"),
+        "sing": ("sang", "sung"),
+        "speak": ("spoke", "spoken"),
+        "take": ("took", "taken"),
+        "write": ("wrote", "written")
     }
 
     # Initialize session state variables
     if "current_verb" not in st.session_state:
         st.session_state.current_verb = None
-    if "user_input" not in st.session_state:
-        st.session_state.user_input = ""
+    if "user_input_past" not in st.session_state:
+        st.session_state.user_input_past = ""
+    if "user_input_participle" not in st.session_state:
+        st.session_state.user_input_participle = ""
     if "check_clicked" not in st.session_state:
         st.session_state.check_clicked = False
 
     # Button to select a new random verb
     if st.button("🎲 Get a new verb", key="irregular_button"):
         st.session_state.current_verb = random.choice(list(verbs.keys()))
-        st.session_state.user_input = ""
+        st.session_state.user_input_past = ""
+        st.session_state.user_input_participle = ""
         st.session_state.check_clicked = False
 
     # Display the current verb
     if st.session_state.current_verb:
         st.write(f"Base form: **{st.session_state.current_verb}**")
 
-        # Text input for user's answer
-        st.session_state.user_input = st.text_input("Enter the past tense form:", value=st.session_state.user_input, key="irregular_input")
+        # Text input for user's answers
+        st.session_state.user_input_past = st.text_input("Enter the past tense form:", value=st.session_state.user_input_past, key="past_input")
+        st.session_state.user_input_participle = st.text_input("Enter the past participle form:", value=st.session_state.user_input_participle, key="participle_input")
 
         # Button to check the answer
-        if st.button("✅ Check the answer", key="irregular_check_button"):
+        if st.button("✅ Check the answers", key="irregular_check_button"):
             st.session_state.check_clicked = True
 
         # Feedback
         if st.session_state.check_clicked:
-            correct_answer = verbs[st.session_state.current_verb]
-            if st.session_state.user_input.strip().lower() == correct_answer:
-                st.success("✅ Correct!")
+            correct_past, correct_participle = verbs[st.session_state.current_verb]
+            past_correct = st.session_state.user_input_past.strip().lower() == correct_past
+            participle_correct = st.session_state.user_input_participle.strip().lower() == correct_participle
+
+            if past_correct and participle_correct:
+                st.success("✅ Both answers are correct!")
             else:
-                st.error(f"❌ Incorrect. The correct past tense is: **{correct_answer}**")
+                if not past_correct:
+                    st.error(f"❌ Incorrect past tense. The correct form is: **{correct_past}**")
+                if not participle_correct:
+                    st.error(f"❌ Incorrect past participle. The correct form is: **{correct_participle}**")
