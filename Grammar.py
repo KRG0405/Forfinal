@@ -15,6 +15,39 @@ with tab1:
     st.markdown("### 📋 Understanding Past Tense")
     st.write("Let's Learn About the Past Tense!")
 
+    import streamlit as st
+import pandas as pd
+
+# Chapter headings
+st.title("Understanding Past Tense")
+
+# Introduction
+st.header("What is the Past Tense?")
+st.write("The past tense is used to talk about actions that have already happened.")
+
+# Regular Verbs Section
+st.header("Regular Verbs")
+st.write("Forming Regular Past Tense:")
+st.write("1. General Rule: Add -ed (e.g., walk → walked)")
+st.write("2. Ending with 'e': Add -d (e.g., love → loved)")
+st.write("3. Single Vowel + Consonant: Double the consonant, add -ed (e.g., stop → stopped)")
+st.write("4. Ending with 'y': Change 'y' to 'i', add -ed (e.g., cry → cried)")
+
+# Irregular Verbs Section
+st.header("Irregular Verbs")
+st.write("Irregular verbs do not follow standard rules. Here are some examples:")
+
+# Irregular Verbs Table
+irregular_verbs_data = {
+    "Base Form": ["Find", "Become", "Be", "Begin", "Break", "Bring", "Buy", "Choose", "Come", "Do", "Drink", "Drive", "Eat", "Fall", "Feel", "Get", "Go", "Have", "Know", "Leave", "Make"],
+    "Past Tense": ["Found", "Became", "Was/Were", "Began", "Broke", "Brought", "Bought", "Chose", "Came", "Did", "Drank", "Drove", "Ate", "Fell", "Felt", "Got", "Went", "Had", "Knew", "Left", "Made"],
+    "Past Participle": ["Found", "Become", "Been", "Begun", "Broken", "Brought", "Bought", "Chosen", "Come", "Done", "Drunk", "Driven", "Eaten", "Fallen", "Felt", "Gotten", "Gone", "Had", "Known", "Left", "Made"]
+}
+
+irregular_verbs_df = pd.DataFrame(irregular_verbs_data)
+st.table(irregular_verbs_df)
+
+
     # List of image URLs from your GitHub repository
     image_urls = [
         "images/슬라이드1.PNG",
