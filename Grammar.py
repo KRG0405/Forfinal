@@ -77,6 +77,8 @@ with tab2:
 
 ######### TAB 3
 
+with tab1:
+
 import streamlit as st
 import random
 
