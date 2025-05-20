@@ -115,7 +115,7 @@ with tab2:
 ######### TAB 3
 
 with tab3:
-    st.title("Regular Verb Quiz")
+    st.title("Regular Verb Practice")
 
     # List of regular verbs and their past tense forms with rules
     regular_verbs_explained = {
@@ -149,7 +149,7 @@ with tab3:
         st.write(f"Past tense: **{past_form}**")
         
         # Pronunciation for base form
-        if st.button(f"🔊 Pronounce '{base_form}'", key="pronounce_base"):
+        if st.button(f"🔊 Pronounce '{base_form}'", key=f"pronounce_base_{base_form}"):
             tts = gTTS(base_form)
             audio_fp = BytesIO()
             tts.write_to_fp(audio_fp)
@@ -157,7 +157,7 @@ with tab3:
             st.audio(audio_fp, format="audio/mp3")
 
         # Pronunciation for past tense form
-        if st.button(f"🔊 Pronounce '{past_form}'", key="pronounce_past"):
+        if st.button(f"🔊 Pronounce '{past_form}'", key=f"pronounce_past_{base_form}"):
             tts = gTTS(past_form)
             audio_fp = BytesIO()
             tts.write_to_fp(audio_fp)
@@ -181,7 +181,7 @@ with tab3:
 ######### TAB 4
 
 with tab4:
-    st.title("Irregular Verb Quiz")
+    st.title("Irregular Verb Test")
 
     # Initialize session state variables
     if "current_verb" not in st.session_state:
@@ -225,7 +225,5 @@ with tab4:
                 if not past_correct:
                     st.info(f"The correct past tense is: **{correct_past}**")
                 if not participle_correct:
-                    st.info(f"The correct past participle is: **{correct_participle}**")
-
                     st.info(f"The correct past participle is: **{correct_participle}**")
 
