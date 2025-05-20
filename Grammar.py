@@ -1,11 +1,18 @@
 import streamlit as st
 from gtts import gTTS
 from io import BytesIO
+import random
+import pandas as pd
 
-st.title("🌱 Grammar Learning")
+st.write("🌱 Grammar Learning")
 
 # Create tabs
-tab1, tab2 = st.tabs(["1. Understanding Past Tense", "2. Pronunciation Practice"])
+tab1, tab2, tab3, tab4 = st.tabs([
+    "1. Understanding Past Tense",
+    "2. Pronunciation Practice",
+    "3. Regular Verb Practice",
+    "4. Irregular Verb Test"
+])
 
 ######### TAB 1
 
@@ -35,7 +42,8 @@ with tab1:
         "Past Participle": ["Found", "Become", "Been", "Begun", "Broken", "Brought", "Bought", "Chosen", "Come", "Done", "Drunk", "Driven", "Eaten", "Fallen", "Felt", "Gotten", "Gone", "Had", "Known", "Left", "Made", "Read", "Run", "Said", "Seen", "Sent", "Sung", "Spoken", "Taken", "Written"]
     }
 
-    st.table(irregular_verbs_data)
+    irregular_verbs_df = pd.DataFrame(irregular_verbs_data)
+    st.table(irregular_verbs_df)
 
 ######### TAB 2
 
@@ -103,4 +111,101 @@ with tab2:
             tts.write_to_fp(audio_fp)
             audio_fp.seek(0)
             st.audio(audio_fp, format="audio/mp3")
+
+######### TAB 3
+
+with tab3:
+    st.title("Regular Verb Practice")
+
+    # List of regular verbs and their past tense forms with rules
+    regular_verbs_explained = {
+        "discover": ("discovered", "General Rule: Add -ed (e.g., walk → walked)"),
+        "end": ("ended", "General Rule: Add -ed (e.g., walk → walked)"),
+        "realize": ("realized", "Ending with e: Add -d (e.g., love → loved)"),
+        "inspire": ("inspired", "Ending with e: Add -d (e.g., love → loved)"),
+        "start": ("started", "Single Vowel + Consonant: Double the consonant, add -ed (e.g., stop → stopped)")
+    }
+
+    # Initialize session state variables
+    if "current_regular_verb" not in st.session_state:
+        st.session_state.current_regular_verb = None
+    if "regular_user_input" not in st.session_state:
+        st.session_state.regular_user_input = ""
+    if "regular_check_clicked" not in st.session_state:
+        st.session_state.regular_check_clicked = False
+
+    # Button to select a new random regular verb
+    if st.button("🎲 Get a new regular verb", key="regular_button"):
+        st.session_state.current_regular_verb = random.choice(list(regular_verbs_explained.keys()))
+        st.session_state.regular_user_input = ""
+        st.session_state.regular_check_clicked = False
+
+    # Display the current regular verb
+    if st.session_state.current_regular_verb:
+        st.write(f"Base form: **{st.session_state.current_regular_verb}**")
+
+        # Text input for user's answer
+        st.session_state.regular_user_input = st.text_input("Enter the past tense form:", value=st.session_state.regular_user_input, key="regular_input")
+
+        # Button to check the answer
+        if st.button("✅ Check the answer", key="regular_check_button"):
+            st.session_state.regular_check_clicked = True
+
+        # Feedback
+        if st.session_state.regular_check_clicked:
+            correct_answer, explanation = regular_verbs_explained[st.session_state.current_regular_verb]
+            if st.session_state.regular_user_input.strip().lower() == correct_answer:
+                st.success(f"✅ Correct! {explanation}")
+            else:
+                st.error(f"❌ Incorrect. The correct past tense is: **{correct_answer}**")
+
+######### TAB 4
+
+with tab4:
+    st.title("Irregular Verb Test")
+
+    # Initialize session state variables
+    if "current_verb" not in st.session_state:
+        st.session_state.current_verb = None
+    if "user_input_past" not in st.session_state:
+        st.session_state.user_input_past = ""
+    if "user_input_participle" not in st.session_state:
+        st.session_state.user_input_participle = ""
+    if "check_clicked" not in st.session_state:
+        st.session_state.check_clicked = False
+
+    # Button to select a new random verb
+    if st.button("🎲 Get a new verb", key="irregular_button"):
+        st.session_state.current_verb = random.choice(list(irregular_verbs.keys()))
+        st.session_state.user_input_past = ""
+        st.session_state.user_input_participle = ""
+        st.session_state.check_clicked = False
+
+    # Display the current verb
+    if st.session_state.current_verb:
+        st.write(f"Base form: **{st.session_state.current_verb}**")
+
+        # Text input for user's answers
+        st.session_state.user_input_past = st.text_input("Enter the past tense form:", value=st.session_state.user_input_past, key="past_input")
+        st.session_state.user_input_participle = st.text_input("Enter the past participle form:", value=st.session_state.user_input_participle, key="participle_input")
+
+        # Button to check the answer
+        if st.button("✅ Check the answers", key="irregular_check_button"):
+            st.session_state.check_clicked = True
+
+        # Feedback
+        if st.session_state.check_clicked:
+            correct_past, correct_participle = irregular_verbs[st.session_state.current_verb]
+            past_correct = st.session_state.user_input_past.strip().lower() == correct_past
+            participle_correct = st.session_state.user_input_participle.strip().lower() == correct_participle
+
+            if past_correct and participle_correct:
+                st.success("✅ Both answers are correct!")
+            else:
+                st.error("❌ Incorrect. You need to get both forms right.")
+                if not past_correct:
+                    st.info(f"The correct past tense is: **{correct_past}**")
+                if not participle_correct:
+                    st.info(f"The correct past participle is: **{correct_participle}**")
+
 
