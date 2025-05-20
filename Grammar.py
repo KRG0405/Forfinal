@@ -51,7 +51,13 @@ with tab2:
     st.title("🔊 Pronunciation Practice")
 
     # Define the lists of verbs
-    regular_verbs = ["discover", "end", "realize", "inspire", "start"]
+    regular_verbs = {
+        "discover": "discovered",
+        "end": "ended",
+        "realize": "realized",
+        "inspire": "inspired",
+        "start": "started"
+    }
     irregular_verbs = {
         "be": ("was/were", "been"),
         "become": ("became", "become"),
@@ -88,15 +94,27 @@ with tab2:
 
     # Regular Verbs Section
     st.header("Regular Verbs Pronunciation")
-    selected_regular_verb = st.selectbox("Select a regular verb:", regular_verbs, key="regular")
+    selected_regular_verb = st.selectbox("Select a regular verb:", list(regular_verbs.keys()), key="regular")
 
     if selected_regular_verb:
-        st.write(f"Pronunciation for: {selected_regular_verb}")
-        tts = gTTS(selected_regular_verb)
-        audio_fp = BytesIO()
-        tts.write_to_fp(audio_fp)
-        audio_fp.seek(0)
-        st.audio(audio_fp, format="audio/mp3")
+        past_form = regular_verbs[selected_regular_verb]
+        st.write(f"Base form: {selected_regular_verb}, Past tense: {past_form}")
+        
+        # Pronunciation for base form
+        if st.button(f"🔊 Pronounce '{selected_regular_verb}'", key=f"pronounce_base_{selected_regular_verb}"):
+            tts = gTTS(selected_regular_verb)
+            audio_fp = BytesIO()
+            tts.write_to_fp(audio_fp)
+            audio_fp.seek(0)
+            st.audio(audio_fp, format="audio/mp3")
+        
+        # Pronunciation for past tense form
+        if st.button(f"🔊 Pronounce '{past_form}'", key=f"pronounce_past_{selected_regular_verb}"):
+            tts = gTTS(past_form)
+            audio_fp = BytesIO()
+            tts.write_to_fp(audio_fp)
+            audio_fp.seek(0)
+            st.audio(audio_fp, format="audio/mp3")
 
     # Irregular Verbs Section
     st.header("Irregular Verbs Pronunciation")
