@@ -101,20 +101,18 @@ with tab2:
         st.write(f"Base form: {selected_regular_verb}, Past tense: {past_form}")
         
         # Pronunciation for base form
-        if st.button(f"🔊 Pronounce '{selected_regular_verb}'", key=f"pronounce_base_{selected_regular_verb}"):
-            tts = gTTS(selected_regular_verb)
-            audio_fp = BytesIO()
-            tts.write_to_fp(audio_fp)
-            audio_fp.seek(0)
-            st.audio(audio_fp, format="audio/mp3")
+        tts_base = gTTS(selected_regular_verb)
+        audio_fp_base = BytesIO()
+        tts_base.write_to_fp(audio_fp_base)
+        audio_fp_base.seek(0)
+        st.audio(audio_fp_base, format="audio/mp3")
         
         # Pronunciation for past tense form
-        if st.button(f"🔊 Pronounce '{past_form}'", key=f"pronounce_past_{selected_regular_verb}"):
-            tts = gTTS(past_form)
-            audio_fp = BytesIO()
-            tts.write_to_fp(audio_fp)
-            audio_fp.seek(0)
-            st.audio(audio_fp, format="audio/mp3")
+        tts_past = gTTS(past_form)
+        audio_fp_past = BytesIO()
+        tts_past.write_to_fp(audio_fp_past)
+        audio_fp_past.seek(0)
+        st.audio(audio_fp_past, format="audio/mp3")
 
     # Irregular Verbs Section
     st.header("Irregular Verbs Pronunciation")
@@ -244,5 +242,3 @@ with tab4:
                     st.info(f"The correct past tense is: **{correct_past}**")
                 if not participle_correct:
                     st.info(f"The correct past participle is: **{correct_participle}**")
-
-
