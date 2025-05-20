@@ -115,7 +115,7 @@ with tab2:
 ######### TAB 3
 
 with tab3:
-    st.title("Regular Verb Practice")
+    st.title("Regular Verb Quiz")
 
     # List of regular verbs and their past tense forms with rules
     regular_verbs_explained = {
@@ -181,7 +181,7 @@ with tab3:
 ######### TAB 4
 
 with tab4:
-    st.title("Irregular Verb Test")
+    st.title("Irregular Verb Quiz")
 
     # Initialize session state variables
     if "current_verb" not in st.session_state:
