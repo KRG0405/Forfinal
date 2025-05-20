@@ -13,9 +13,10 @@ tab1, tab2, tab3 = st.tabs([
 ######### TAB 1
 
 with tab1:
-    st.markdown("### 📋 Understanding Past Tense")
+    st.markdown("## 📋 Understanding Past Tense")
     st.write("Let's Learn About the Past Tense!")
 
+   
     # Introduction
     st.header("What is the Past Tense?")
     st.write("The past tense is used to talk about actions that have already happened.")
