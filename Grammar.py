@@ -87,31 +87,31 @@ irregular_verbs = {
     "write": ("wrote", "written")
 }
 
-# Combine regular and irregular verbs for selection
-all_verbs = ["Regular: " + verb for verb in regular_verbs] + ["Irregular: " + verb for verb in irregular_verbs.keys()]
+# Regular Verbs Section
+st.header("Regular Verbs Pronunciation")
+selected_regular_verb = st.selectbox("Select a regular verb:", regular_verbs, key="regular")
 
-# Select a verb from the dropdown
-selected_verb = st.selectbox("Select a verb to hear its pronunciation:", all_verbs)
+if selected_regular_verb:
+    st.write(f"Pronunciation for: {selected_regular_verb}")
+    tts = gTTS(selected_regular_verb)
+    audio_fp = BytesIO()
+    tts.write_to_fp(audio_fp)
+    audio_fp.seek(0)
+    st.audio(audio_fp, format="audio/mp3")
 
-# Determine if the selected verb is regular or irregular
-if selected_verb.startswith("Regular: "):
-    verb = selected_verb.replace("Regular: ", "")
-    words_to_pronounce = [verb]
-else:
-    verb = selected_verb.replace("Irregular: ", "")
-    words_to_pronounce = [verb] + list(irregular_verbs[verb])
+# Irregular Verbs Section
+st.header("Irregular Verbs Pronunciation")
+selected_irregular_verb = st.selectbox("Select an irregular verb:", list(irregular_verbs.keys()), key="irregular")
 
-# Generate and play pronunciation
-if selected_verb:
-    for word in words_to_pronounce:
-        st.write(f"Pronunciation for: {word}")
-        tts = gTTS(word)
+if selected_irregular_verb:
+    forms = [selected_irregular_verb] + list(irregular_verbs[selected_irregular_verb])
+    for form in forms:
+        st.write(f"Pronunciation for: {form}")
+        tts = gTTS(form)
         audio_fp = BytesIO()
         tts.write_to_fp(audio_fp)
-        audio_fp.seek(0)  # Reset the pointer to the start of the BytesIO object
+        audio_fp.seek(0)
         st.audio(audio_fp, format="audio/mp3")
-
-
 
 ######### TAB 3
 
