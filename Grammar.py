@@ -45,58 +45,72 @@ with tab1:
 
 ######### TAB 2
 
-with tab2:
-    st.title("🔊 Pronunciation Practice")
+import streamlit as st
+from gtts import gTTS
+from io import BytesIO
 
-    # Regular Verbs
-    st.header("Regular Verbs Pronunciation")
-    regular_verbs = ["discover", "end", "realize", "inspire", "start"]
-    for verb in regular_verbs:
-        if st.button(f"Listen to {verb}", key=f"listen_{verb}"):
-            # Here you would implement code to play the pronunciation
-            st.write(f"Playing pronunciation for {verb}")
+st.title("🔊 Pronunciation Practice")
 
-    # Irregular Verbs
-    st.header("Irregular Verbs Pronunciation")
-    verbs = {
-        "be": ("was/were", "been"),
-        "become": ("became", "become"),
-        "begin": ("began", "begun"),
-        "break": ("broke", "broken"),
-        "bring": ("brought", "brought"),
-        "build": ("built", "built"),
-        "buy": ("bought", "bought"),
-        "catch": ("caught", "caught"),
-        "choose": ("chose", "chosen"),
-        "come": ("came", "come"),
-        "do": ("did", "done"),
-        "drink": ("drank", "drunk"),
-        "drive": ("drove", "driven"),
-        "eat": ("ate", "eaten"),
-        "fall": ("fell", "fallen"),
-        "feel": ("felt", "felt"),
-        "get": ("got", "gotten"),
-        "go": ("went", "gone"),
-        "have": ("had", "had"),
-        "know": ("knew", "known"),
-        "leave": ("left", "left"),
-        "make": ("made", "made"),
-        "read": ("read", "read"),
-        "run": ("ran", "run"),
-        "say": ("said", "said"),
-        "see": ("saw", "seen"),
-        "send": ("sent", "sent"),
-        "sing": ("sang", "sung"),
-        "speak": ("spoke", "spoken"),
-        "take": ("took", "taken"),
-        "write": ("wrote", "written")
-    }
+# Define the lists of verbs
+regular_verbs = ["discover", "end", "realize", "inspire", "start"]
+irregular_verbs = {
+    "be": ("was/were", "been"),
+    "become": ("became", "become"),
+    "begin": ("began", "begun"),
+    "break": ("broke", "broken"),
+    "bring": ("brought", "brought"),
+    "build": ("built", "built"),
+    "buy": ("bought", "bought"),
+    "catch": ("caught", "caught"),
+    "choose": ("chose", "chosen"),
+    "come": ("came", "come"),
+    "do": ("did", "done"),
+    "drink": ("drank", "drunk"),
+    "drive": ("drove", "driven"),
+    "eat": ("ate", "eaten"),
+    "fall": ("fell", "fallen"),
+    "feel": ("felt", "felt"),
+    "get": ("got", "gotten"),
+    "go": ("went", "gone"),
+    "have": ("had", "had"),
+    "know": ("knew", "known"),
+    "leave": ("left", "left"),
+    "make": ("made", "made"),
+    "read": ("read", "read"),
+    "run": ("ran", "run"),
+    "say": ("said", "said"),
+    "see": ("saw", "seen"),
+    "send": ("sent", "sent"),
+    "sing": ("sang", "sung"),
+    "speak": ("spoke", "spoken"),
+    "take": ("took", "taken"),
+    "write": ("wrote", "written")
+}
 
-    for verb, forms in verbs.items():
-        base, past, participle = verb, forms[0], forms[1]
-        if st.button(f"Listen to {base}, {past}, {participle}", key=f"listen_{verb}"):
-            # Here you would implement code to play the pronunciation
-            st.write(f"Playing pronunciation for {base}, {past}, and {participle}")
+# Combine regular and irregular verbs for selection
+all_verbs = ["Regular: " + verb for verb in regular_verbs] + ["Irregular: " + verb for verb in irregular_verbs.keys()]
+
+# Select a verb from the dropdown
+selected_verb = st.selectbox("Select a verb to hear its pronunciation:", all_verbs)
+
+# Determine if the selected verb is regular or irregular
+if selected_verb.startswith("Regular: "):
+    verb = selected_verb.replace("Regular: ", "")
+    words_to_pronounce = [verb]
+else:
+    verb = selected_verb.replace("Irregular: ", "")
+    words_to_pronounce = [verb] + list(irregular_verbs[verb])
+
+# Generate and play pronunciation
+if selected_verb:
+    for word in words_to_pronounce:
+        st.write(f"Pronunciation for: {word}")
+        tts = gTTS(word)
+        audio_fp = BytesIO()
+        tts.write_to_fp(audio_fp)
+        audio_fp.seek(0)  # Reset the pointer to the start of the BytesIO object
+        st.audio(audio_fp, format="audio/mp3")
+
 
 ######### TAB 3
 
