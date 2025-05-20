@@ -43,19 +43,7 @@ with tab1:
     irregular_verbs_df = pd.DataFrame(irregular_verbs_data)
     st.table(irregular_verbs_df)
 
-    # List of image URLs from your GitHub repository
-    image_urls = [
-        "images/슬라이드1.PNG",
-        "images/슬라이드2.PNG",
-        "images/슬라이드3.PNG",
-        "images/슬라이드4.PNG",
-        "images/슬라이드5.PNG"
-    ]
-
-    # Display each image using a loop
-    for url in image_urls:
-        st.image(url, caption=f"Slide {image_urls.index(url) + 1}", width=600)  # width in pixels
-
+  
 ######### TAB 2
 
 with tab2:
