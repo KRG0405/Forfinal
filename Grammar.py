@@ -10,8 +10,8 @@ st.write("🌱 Grammar Learning")
 tab1, tab2, tab3, tab4 = st.tabs([
     "1. Understanding Past Tense",
     "2. Pronunciation Practice",
-    "3. Regular Verb Practice",
-    "4. Irregular Verb Test"
+    "3. Regular Verb Quiz",
+    "4. Irregular Verb Quiz"
 ])
 
 ######### TAB 1
