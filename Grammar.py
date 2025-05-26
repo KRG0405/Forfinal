@@ -58,6 +58,7 @@ with tab1:
 
     combined_verbs_df = pd.DataFrame(combined_verb_data)
     st.table(combined_verbs_df)
+
 ######### TAB 2
 
 with tab2:
@@ -140,8 +141,6 @@ with tab2:
             tts.write_to_fp(audio_fp)
             audio_fp.seek(0)
             st.audio(audio_fp, format="audio/mp3")
-
-######### TAB 3
 
 ######### TAB 3
 
@@ -241,3 +240,4 @@ with tab4:
                     st.info(f"The correct past tense is: **{correct_past}**")
                 if not participle_correct:
                     st.info(f"The correct past participle is: **{correct_participle}**")
+
