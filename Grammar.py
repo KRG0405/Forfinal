@@ -19,7 +19,6 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
 
 with tab1:
     st.title("Understanding Past Tense")
-    # Embed the video only in the first tab
     st.video("https://youtu.be/q6j-D5EzZo8", start_time=0)
 
 ######### TAB 2 - Understanding Past Tense
@@ -122,20 +121,18 @@ with tab3:
         past_form = regular_verbs[selected_regular_verb]
         st.write(f"Base form: {selected_regular_verb}, Past tense: {past_form}")
 
-        # Pronunciation for base form
+        # Combine audio for base form and past tense
         try:
-            tts_base = gTTS(selected_regular_verb)
-            audio_fp_base = BytesIO()
-            tts_base.write_to_fp(audio_fp_base)
-            audio_fp_base.seek(0)
-            st.audio(audio_fp_base, format="audio/mp3")
-
-            # Pronunciation for past tense form
-            tts_past = gTTS(past_form)
-            audio_fp_past = BytesIO()
-            tts_past.write_to_fp(audio_fp_past)
-            audio_fp_past.seek(0)
-            st.audio(audio_fp_past, format="audio/mp3")
+            # Create a list of forms to pronounce
+            forms = [selected_regular_verb, past_form]
+            combined_audio_fp = BytesIO()
+            for form in forms:
+                tts = gTTS(form)
+                tts.write_to_fp(combined_audio_fp)
+            
+            # Play the combined audio
+            combined_audio_fp.seek(0)
+            st.audio(combined_audio_fp, format="audio/mp3")
         except Exception as e:
             st.error(f"Error generating audio: {e}")
 
@@ -146,17 +143,19 @@ with tab3:
     if selected_irregular_verb:
         forms = [selected_irregular_verb] + list(irregular_verbs[selected_irregular_verb])
         
-        # Generate audio for each form separately
-        for form in forms:
-            try:
+        # Combine audio for all forms
+        try:
+            combined_audio_fp = BytesIO()
+            for form in forms:
                 st.write(f"Pronunciation for: {form}")
                 tts = gTTS(form)
-                audio_fp = BytesIO()
-                tts.write_to_fp(audio_fp)
-                audio_fp.seek(0)
-                st.audio(audio_fp, format="audio/mp3")
-            except Exception as e:
-                st.error(f"Error generating audio for {form}: {e}")
+                tts.write_to_fp(combined_audio_fp)
+            
+            # Play the combined audio
+            combined_audio_fp.seek(0)
+            st.audio(combined_audio_fp, format="audio/mp3")
+        except Exception as e:
+            st.error(f"Error generating audio for {form}: {e}")
 
 ######### TAB 4 - Regular Verb Quiz
 
@@ -255,4 +254,3 @@ with tab5:
                     st.info(f"The correct past tense is: **{correct_past}**")
                 if not participle_correct:
                     st.info(f"The correct past participle is: **{correct_participle}**")
-
