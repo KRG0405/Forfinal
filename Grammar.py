@@ -52,7 +52,7 @@ with tab2:
 
     irregular_verbs_df = pd.DataFrame(irregular_verbs_data)
     st.table(irregular_verbs_df)
-    
+
     # Add the new section for stories with past tense forms
     st.header("Stories with Past Tense Forms")
     st.write("Here is a table of verbs used in stories with their past and past participle forms:")
@@ -121,20 +121,23 @@ with tab3:
     if selected_regular_verb:
         past_form = regular_verbs[selected_regular_verb]
         st.write(f"Base form: {selected_regular_verb}, Past tense: {past_form}")
-        
+
         # Pronunciation for base form
-        tts_base = gTTS(selected_regular_verb)
-        audio_fp_base = BytesIO()
-        tts_base.write_to_fp(audio_fp_base)
-        audio_fp_base.seek(0)
-        st.audio(audio_fp_base, format="audio/mp3")
-        
-        # Pronunciation for past tense form
-        tts_past = gTTS(past_form)
-        audio_fp_past = BytesIO()
-        tts_past.write_to_fp(audio_fp_past)
-        audio_fp_past.seek(0)
-        st.audio(audio_fp_past, format="audio/mp3")
+        try:
+            tts_base = gTTS(selected_regular_verb)
+            audio_fp_base = BytesIO()
+            tts_base.write_to_fp(audio_fp_base)
+            audio_fp_base.seek(0)
+            st.audio(audio_fp_base, format="audio/mp3")
+
+            # Pronunciation for past tense form
+            tts_past = gTTS(past_form)
+            audio_fp_past = BytesIO()
+            tts_past.write_to_fp(audio_fp_past)
+            audio_fp_past.seek(0)
+            st.audio(audio_fp_past, format="audio/mp3")
+        except Exception as e:
+            st.error(f"Error generating audio: {e}")
 
     # Irregular Verbs Section
     st.header("Irregular Verbs Pronunciation")
@@ -144,23 +147,26 @@ with tab3:
         forms = [selected_irregular_verb] + list(irregular_verbs[selected_irregular_verb])
         
         # Combine all forms into a single audio file
-        combined_audio = AudioSegment.silent(duration=100)  # Start with a silent audio
-        for form in forms:
-            st.write(f"Pronunciation for: {form}")
-            tts = gTTS(form)
-            audio_fp = BytesIO()
-            tts.write_to_fp(audio_fp)
-            audio_fp.seek(0)
-            
-            # Load the audio into a pydub AudioSegment
-            audio_segment = AudioSegment.from_file(audio_fp, format="mp3")
-            combined_audio += audio_segment + AudioSegment.silent(duration=500)  # Add a pause between words
+        try:
+            combined_audio = AudioSegment.silent(duration=100)  # Start with a silent audio
+            for form in forms:
+                st.write(f"Pronunciation for: {form}")
+                tts = gTTS(form)
+                audio_fp = BytesIO()
+                tts.write_to_fp(audio_fp)
+                audio_fp.seek(0)
+                
+                # Load the audio into a pydub AudioSegment
+                audio_segment = AudioSegment.from_file(audio_fp, format="mp3")
+                combined_audio += audio_segment + AudioSegment.silent(duration=500)  # Add a pause between words
 
-        # Export the combined audio to a BytesIO object
-        combined_audio_fp = BytesIO()
-        combined_audio.export(combined_audio_fp, format="mp3")
-        combined_audio_fp.seek(0)
-        st.audio(combined_audio_fp, format="audio/mp3")
+            # Export the combined audio to a BytesIO object
+            combined_audio_fp = BytesIO()
+            combined_audio.export(combined_audio_fp, format="mp3")
+            combined_audio_fp.seek(0)
+            st.audio(combined_audio_fp, format="audio/mp3")
+        except Exception as e:
+            st.error(f"Error processing audio: {e}")
 
 ######### TAB 4 - Regular Verb Quiz
 
@@ -211,7 +217,6 @@ with tab4:
             else:
                 st.error(f"❌ Incorrect. The correct past tense is: **{past_form}**")
 
-
 ######### TAB 5 - Irregular Verb Quiz
 
 with tab5:
@@ -260,3 +265,4 @@ with tab5:
                     st.info(f"The correct past tense is: **{correct_past}**")
                 if not participle_correct:
                     st.info(f"The correct past participle is: **{correct_participle}**")
+
