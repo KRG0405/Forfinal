@@ -3,20 +3,28 @@ from gtts import gTTS
 from io import BytesIO
 import random
 import pandas as pd
+from pydub import AudioSegment
 
 st.write("🌱 Grammar Learning")
 
 # Create tabs
-tab1, tab2, tab3, tab4 = st.tabs([
-    "1. Understanding Past Tense",
-    "2. Pronunciation Practice",
-    "3. Regular Verb Quiz",
-    "4. Irregular Verb Quiz"
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    "1. Past Tense Video",
+    "2. Understanding Past Tense",
+    "3. Pronunciation Practice",
+    "4. Regular Verb Quiz",
+    "5. Irregular Verb Quiz"
 ])
 
-######### TAB 1
+######### TAB 1 - Past Tense Video
 
 with tab1:
+    st.title("Understanding Past Tense")
+    st.video("https://youtu.be/q6j-D5EzZo8", start_time=0)
+
+######### TAB 2 - Original TAB 1 content
+
+with tab2:
     st.markdown("## 📋 Understanding Past Tense")
     st.write("Let's Learn About the Past Tense!")
 
@@ -59,9 +67,9 @@ with tab1:
     combined_verbs_df = pd.DataFrame(combined_verb_data)
     st.table(combined_verbs_df)
 
-######### TAB 2
+######### TAB 3 - Pronunciation Practice
 
-with tab2:
+with tab3:
     st.title("🔊 Pronunciation Practice")
 
     # Define the lists of verbs
@@ -134,17 +142,29 @@ with tab2:
 
     if selected_irregular_verb:
         forms = [selected_irregular_verb] + list(irregular_verbs[selected_irregular_verb])
+        
+        # Combine all forms into a single audio file
+        combined_audio = AudioSegment.silent(duration=100)  # Start with a silent audio
         for form in forms:
             st.write(f"Pronunciation for: {form}")
             tts = gTTS(form)
             audio_fp = BytesIO()
             tts.write_to_fp(audio_fp)
             audio_fp.seek(0)
-            st.audio(audio_fp, format="audio/mp3")
+            
+            # Load the audio into a pydub AudioSegment
+            audio_segment = AudioSegment.from_file(audio_fp, format="mp3")
+            combined_audio += audio_segment + AudioSegment.silent(duration=500)  # Add a pause between words
 
-######### TAB 3
+        # Export the combined audio to a BytesIO object
+        combined_audio_fp = BytesIO()
+        combined_audio.export(combined_audio_fp, format="mp3")
+        combined_audio_fp.seek(0)
+        st.audio(combined_audio_fp, format="audio/mp3")
 
-with tab3:
+######### TAB 4 - Regular Verb Quiz
+
+with tab4:
     st.title("Regular Verb Quiz")
 
     # List of regular verbs and their past tense forms with rules
@@ -192,9 +212,9 @@ with tab3:
                 st.error(f"❌ Incorrect. The correct past tense is: **{past_form}**")
 
 
-######### TAB 4
+######### TAB 5 - Irregular Verb Quiz
 
-with tab4:
+with tab5:
     st.title("Irregular Verb Quiz")
 
     # Initialize session state variables
@@ -240,4 +260,3 @@ with tab4:
                     st.info(f"The correct past tense is: **{correct_past}**")
                 if not participle_correct:
                     st.info(f"The correct past participle is: **{correct_participle}**")
-
