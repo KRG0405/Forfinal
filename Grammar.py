@@ -3,7 +3,6 @@ from gtts import gTTS
 from io import BytesIO
 import random
 import pandas as pd
-from pydub import AudioSegment
 
 st.write("🌱 Grammar Learning")
 
